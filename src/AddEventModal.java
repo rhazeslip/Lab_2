@@ -9,25 +9,27 @@ public class AddEventModal extends JDialog {
     public AddEventModal(EventListPanel eventListPanel) {
         this.eventListPanel = eventListPanel;
         setTitle("Add Event");
-        setSize(400, 300);
-        setLayout(new GridLayout(5, 2));
+        setSize(500, 400);
+        setLayout(new BorderLayout());
 
-        JTextField nameField = new JTextField();
-        JTextField dateField = new JTextField();
-        JTextField endDateField = new JTextField();
-        JTextField locationField = new JTextField();
+        JPanel formPanel = new JPanel();
+        formPanel.setLayout(new GridLayout(5,2,5,5));
+
+        formPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JTextField nameField = new JTextField(20);
+        JTextField dateField = new JTextField(20);
+        JTextField endDateField = new JTextField(20);
+        JTextField locationField = new JTextField(20);
         JComboBox<String> typeComboBox = new JComboBox<>(new String[]{"Deadline", "Meeting"});
 
-        add(new JLabel("Name:"));
-        add(nameField);
-        add(new JLabel("Date (yyyy-MM-dd HH:mm):"));
-        add(dateField);
-        add(new JLabel("End Date (yyyy-MM-dd HH:mm):"));
-        add(endDateField);
-        add(new JLabel("Location:"));
-        add(locationField);
-        add(new JLabel("Type:"));
-        add(typeComboBox);
+        addFormRow(formPanel, "Name: ", nameField);
+        addFormRow(formPanel, "Start Date (yyyy-MM-dd HH:mm): ", dateField);
+        addFormRow(formPanel, "End Date (yyyy-MM-dd HH:mm): ", endDateField);
+        addFormRow(formPanel, "Location: ", locationField);
+        addFormRow(formPanel, "Types", typeComboBox);
+
+        add(formPanel, BorderLayout.CENTER);
 
         JButton addButton = new JButton("Add");
         addButton.addActionListener(e -> {
@@ -42,8 +44,16 @@ public class AddEventModal extends JDialog {
             }
             dispose();
         });
-        add(addButton);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(addButton);
+        add(buttonPanel, BorderLayout.SOUTH);
 
         setVisible(true);
+    }
+
+    private void addFormRow(JPanel panel, String labelText, JComponent field){
+        panel.add(new JLabel(labelText));
+        panel.add(field);
     }
 }

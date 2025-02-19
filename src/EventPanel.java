@@ -31,8 +31,13 @@ public class EventPanel extends JPanel {
     // Update the display to reflect the current state of the event
     private void updateDisplay() {
         eventDetails.setText(event.toString()); // Update the event details text
+
+        //Changes the background color of button based on completion
         if (event instanceof Completable && ((Completable) event).isComplete()) {
-            completeButton.setEnabled(false); // Disable the button if the event is complete
+            setBackground(Color.GREEN);
+            if (completeButton != null) {
+                completeButton.setEnabled(false);// Disable the button if the event is complete
+            }
         }
         revalidate(); // Refresh the panel
         repaint();
@@ -44,9 +49,9 @@ public class EventPanel extends JPanel {
         if (event.getDateTime().isBefore(now)) {
             setBackground(Color.RED); // Overdue
         } else if (event.getDateTime().isBefore(now.plusDays(1))) {
-            setBackground(Color.YELLOW); // Imminent
+            setBackground(Color.MAGENTA); // Imminent
         } else {
-            setBackground(Color.GREEN); // Distant
+            setBackground(Color.PINK); // Distant
         }
     }
 }
